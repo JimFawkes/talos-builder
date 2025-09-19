@@ -3,11 +3,11 @@ TALOS_VERSION = v1.10.7
 SBCOVERLAY_VERSION = main
 
 REGISTRY ?= ghcr.io
-REGISTRY_USERNAME ?= talos-rpi5
+REGISTRY_USERNAME ?= jimfawkes
 
 TAG ?= $(shell git describe --tags --exact-match)
 
-EXTENSIONS ?= ghcr.io/siderolabs/gvisor:20250505.0@sha256:d7503b59603f030b972ceb29e5e86979e6c889be1596e87642291fee48ce380c
+EXTENSIONS = ghcr.io/siderolabs/gvisor:20250505.0@sha256:d7503b59603f030b972ceb29e5e86979e6c889be1596e87642291fee48ce380c ghcr.io/siderolabs/iscsi-tools:v0.2.0@sha256:ead7d05a63a7b9e1ce3fd8b4b88ab301ee3d236549972f9bb83583a799a01366 ghcr.io/siderolabs/util-linux-tools:2.40.4@sha256:bcaf485539d7d07ee2988d1f189df74c54f8ad818017bcebe88207618e54b86c
 
 PKG_REPOSITORY = https://github.com/siderolabs/pkgs.git
 TALOS_REPOSITORY = https://github.com/siderolabs/talos.git
@@ -105,7 +105,7 @@ installer:
 			REGISTRY=$(REGISTRY) USERNAME=$(REGISTRY_USERNAME) PUSH=true \
 			PKG_KERNEL=$(REGISTRY)/$(REGISTRY_USERNAME)/kernel:$(PKGS_TAG) \
 			INSTALLER_ARCH=arm64 PLATFORM=linux/arm64 \
-			IMAGER_ARGS="--overlay-name=rpi5 --overlay-image=$(REGISTRY)/$(REGISTRY_USERNAME)/sbc-raspberrypi5:$(SBCOVERLAY_TAG) --system-extension-image=$(EXTENSIONS)" \
+			IMAGER_ARGS="--overlay-name=rpi5 --overlay-image=$(REGISTRY)/$(REGISTRY_USERNAME)/sbc-raspberrypi5:$(SBCOVERLAY_TAG) --system-extension-image ghcr.io/siderolabs/gvisor:20250505.0@sha256:d7503b59603f030b972ceb29e5e86979e6c889be1596e87642291fee48ce380c --system-extension-image ghcr.io/siderolabs/iscsi-tools:v0.2.0@sha256:ead7d05a63a7b9e1ce3fd8b4b88ab301ee3d236549972f9bb83583a799a01366 --system-extension-image ghcr.io/siderolabs/util-linux-tools:2.40.4@sha256:bcaf485539d7d07ee2988d1f189df74c54f8ad818017bcebe88207618e54b86c" \
 			kernel initramfs imager installer-base installer && \
 		docker \
 			run --rm -t -v ./_out:/out -v /dev:/dev --privileged $(REGISTRY)/$(REGISTRY_USERNAME)/imager:$(TALOS_TAG) \
@@ -113,7 +113,9 @@ installer:
 			--base-installer-image="$(REGISTRY)/$(REGISTRY_USERNAME)/installer:$(TALOS_TAG)" \
 			--overlay-name="rpi5" \
 			--overlay-image="$(REGISTRY)/$(REGISTRY_USERNAME)/sbc-raspberrypi5:$(SBCOVERLAY_TAG)" \
-			--system-extension-image="$(EXTENSIONS)"
+			--system-extension-image="ghcr.io/siderolabs/gvisor:20250505.0@sha256:d7503b59603f030b972ceb29e5e86979e6c889be1596e87642291fee48ce380c"
+			--system-extension-image="ghcr.io/siderolabs/iscsi-tools:v0.2.0@sha256:ead7d05a63a7b9e1ce3fd8b4b88ab301ee3d236549972f9bb83583a799a01366"
+			--system-extension-image="ghcr.io/siderolabs/util-linux-tools:2.40.4@sha256:bcaf485539d7d07ee2988d1f189df74c54f8ad818017bcebe88207618e54b86c"
 
 
 
