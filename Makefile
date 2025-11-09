@@ -7,7 +7,7 @@ REGISTRY_USERNAME ?= jimfawkes
 
 TAG ?= $(shell git describe --tags --exact-match)
 
-EXTENSIONS = ghcr.io/siderolabs/gvisor:20250505.0@sha256:d7503b59603f030b972ceb29e5e86979e6c889be1596e87642291fee48ce380c ghcr.io/siderolabs/iscsi-tools:v0.2.0@sha256:ead7d05a63a7b9e1ce3fd8b4b88ab301ee3d236549972f9bb83583a799a01366 ghcr.io/siderolabs/util-linux-tools:2.41.1@sha256:e45602934c82c69cf59eae7f50886f48772176d4945b9db78b6e802633522b56
+EXTENSIONS = ghcr.io/siderolabs/gvisor:20250707.0@sha256:b92856818f9ae5bb072fef3654e0ea6fef6bde11f13fb08b15940fa2dabdcccb ghcr.io/siderolabs/iscsi-tools:v0.2.0@sha256:ead7d05a63a7b9e1ce3fd8b4b88ab301ee3d236549972f9bb83583a799a01366 ghcr.io/siderolabs/util-linux-tools:2.41.1@sha256:e45602934c82c69cf59eae7f50886f48772176d4945b9db78b6e802633522b56
 
 PKG_REPOSITORY = https://github.com/siderolabs/pkgs.git
 TALOS_REPOSITORY = https://github.com/siderolabs/talos.git
